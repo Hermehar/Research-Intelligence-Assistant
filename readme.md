@@ -29,8 +29,8 @@ The extension is the only component that touches Scholar Inbox. The backend neve
 
 ## Features
 
-| Feature:| 
-|---|
+| | Feature:| 
+|---||---|
 | ✅ | Fetch papers from Scholar Inbox across any date range
 | ✅ | Automatic multi-day date navigation
 | ✅ | PDF download via your authenticated browser session
