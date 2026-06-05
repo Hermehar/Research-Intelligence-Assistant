@@ -1,0 +1,53 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: researcher
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: research_assistant
+    ports:
+      - "127.0.0.1:5432:5432"   # localhost only
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U researcher -d research_assistant"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: ../deploy/Dockerfile.backend
+    env_file:
+      - ../backend/.env
+    environment:
+      # Override DB host to the compose service name.
+      DATABASE_URL: postgresql+psycopg://researcher:changeme@db:5432/research_assistant
+      PDF_STORAGE_DIR: /data/pdfs
+    ports:
+      - "127.0.0.1:8000:8000"   # localhost only
+    volumes:
+      - pdfdata:/data/pdfs
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # ---- vLLM (enable once the A100 server is set up) ----
+  # Uncomment and set LLM_MODEL in .env. Requires NVIDIA Container Toolkit.
+  # vllm:
+  #   image: vllm/vllm-openai:latest
+  #   command: ["--model", "${LLM_MODEL}", "--port", "8001"]
+  #   ports:
+  #     - "127.0.0.1:8001:8001"
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: 1
+  #             capabilities: [gpu]
+
+volumes:
+  pgdata:
+  pdfdata:

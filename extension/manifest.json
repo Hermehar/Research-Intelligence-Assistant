@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "Research Intelligence Assistant",
+  "version": "0.2.0",
+  "description": "AI-powered research paper analyzer for Scholar Inbox. Summarizes, compares, and tracks papers using your self-hosted A100 backend.",
+
+  "permissions": [
+    "sidePanel",
+    "storage",
+    "alarms",
+    "tabs",
+    "activeTab"
+  ],
+
+  "host_permissions": [
+    "https://www.scholar-inbox.com/*",
+    "https://arxiv.org/*",
+    "https://www.biorxiv.org/*",
+    "https://www.medrxiv.org/*",
+    "http://127.0.0.1:8080/*",
+    "http://127.0.0.1:8000/*",
+    "http://localhost:8080/*",
+    "http://localhost:8000/*"
+  ],
+
+  "background": {
+    "service_worker": "background/service_worker.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://www.scholar-inbox.com/*"],
+      "js": ["content/content_script.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "side_panel": {
+    "default_path": "sidepanel/index.html"
+  },
+
+  "action": {
+    "default_title": "Research Assistant — click to open panel"
+  }
+}

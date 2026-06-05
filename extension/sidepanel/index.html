@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Research Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <div class="header-left">
+      <span class="logo">⬡</span>
+      <span class="app-title">Research<em>AI</em></span>
+    </div>
+    <div class="header-right">
+      <span id="llm-badge" class="badge badge-unknown">—</span>
+      <span id="header-status" class="header-status"></span>
+    </div>
+  </header>
+
+  <!-- Tabs: Papers | Summaries | Compare | KB | Settings -->
+  <nav class="tab-bar">
+    <button class="tab active" data-tab="papers">Papers</button>
+    <button class="tab" data-tab="summaries">Summaries</button>
+    <button class="tab" data-tab="compare">Compare</button>
+    <button class="tab" data-tab="kb">KB</button>
+    <button class="tab icon-tab" data-tab="settings" title="Settings">⚙</button>
+  </nav>
+
+  <!-- ── PAPERS TAB ── -->
+  <div id="tab-papers" class="tab-content active">
+    <div class="section-controls">
+      <div class="time-row">
+        <label class="ctrl-label">Range</label>
+        <select id="timeRange" class="select">
+          <option value="1">Today</option>
+          <option value="3">Past 3 days</option>
+          <option value="7" selected>Past week</option>
+          <option value="14">Past 2 weeks</option>
+          <option value="30">Past month</option>
+          <option value="custom">Custom…</option>
+        </select>
+        <button id="fetchBtn" class="btn btn-primary">Fetch</button>
+      </div>
+      <div id="customRangeRow" class="custom-range hidden">
+        <input type="date" id="customStart" class="date-input">
+        <span class="date-sep">→</span>
+        <input type="date" id="customEnd" class="date-input">
+      </div>
+    </div>
+
+    <div id="fetchProgress" class="progress-wrap hidden">
+      <div class="progress-track"><div id="fetchBar" class="progress-fill"></div></div>
+      <span id="fetchProgressText" class="progress-label">Collecting…</span>
+    </div>
+
+    <div id="papers-list" class="list-area">
+      <div class="empty-state">
+        <span class="empty-icon">📄</span>
+        <p>Open <strong>Scholar Inbox</strong> and click <strong>Fetch</strong></p>
+      </div>
+    </div>
+
+    <div id="action-bar" class="action-bar hidden">
+      <span id="selCount" class="sel-count">0 selected</span>
+      <button id="selectAllBtn" class="btn btn-ghost btn-sm">All</button>
+      <button id="deselectAllBtn" class="btn btn-ghost btn-sm">None</button>
+      <button id="analyzeBtn" class="btn btn-primary" disabled>Analyze</button>
+    </div>
+
+    <div id="analysisProgress" class="analysis-progress hidden">
+      <div class="pulse-ring"></div>
+      <div class="analysis-info">
+        <span id="analysisPhaseText" class="phase-text">Registering…</span>
+        <span id="analysisRunId" class="run-id"></span>
+      </div>
+      <button id="cancelPollBtn" class="btn btn-ghost btn-sm">Dismiss</button>
+    </div>
+  </div>
+
+  <!-- ── SUMMARIES TAB ── -->
+  <div id="tab-summaries" class="tab-content">
+    <div class="section-controls">
+      <div class="time-row">
+        <input id="summarySearch" class="search-input" type="text" placeholder="Filter…">
+        <button id="showLastRunBtn" class="btn btn-ghost btn-sm" title="Show only papers from the last analysis run">Last run</button>
+        <button id="showAllSummariesBtn" class="btn btn-ghost btn-sm active-filter">All</button>
+        <button id="refreshSummariesBtn" class="btn btn-ghost btn-sm">↻</button>
+        <button id="deleteAllBtn" class="btn btn-danger btn-sm" title="Delete all papers and summaries">🗑 All</button>
+      </div>
+    </div>
+    <div id="summaries-list" class="list-area">
+      <div class="empty-state"><span class="empty-icon">🧾</span><p>Analyze papers to see summaries</p></div>
+    </div>
+  </div>
+
+  <!-- ── COMPARE TAB ── -->
+  <div id="tab-compare" class="tab-content">
+    <div class="section-controls">
+      <div class="time-row">
+        <span class="ctrl-label">Select papers to compare</span>
+        <button id="compareBtn" class="btn btn-primary" disabled>Compare</button>
+      </div>
+    </div>
+    <div id="compare-select-list" class="list-area" style="max-height:200px">
+      <div class="empty-state"><span class="empty-icon">📊</span><p>Load summaries first, then select papers here</p></div>
+    </div>
+    <div id="compare-result" class="compare-result hidden"></div>
+  </div>
+
+  <!-- ── KB TAB ── -->
+  <div id="tab-kb" class="tab-content">
+    <div class="section-controls">
+      <div class="time-row">
+        <input id="kbSearch" class="search-input" type="text" placeholder="Search knowledge base…">
+        <button id="kbSearchBtn" class="btn btn-primary">Search</button>
+      </div>
+    </div>
+    <div id="kb-stats" class="kb-stats hidden"></div>
+    <div id="kb-results" class="list-area">
+      <div class="empty-state"><span class="empty-icon">📚</span><p>Type a query and click Search</p></div>
+    </div>
+  </div>
+
+  <!-- ── SETTINGS TAB ── -->
+  <div id="tab-settings" class="tab-content">
+    <div class="settings-body">
+      <div class="field-group">
+        <label class="field-label">Backend URL</label>
+        <input id="backendUrlInput" class="text-input" type="url" placeholder="http://192.168.3.19:8080">
+        <p class="field-hint">URL of your A100 backend (uvicorn). Must be reachable from this browser.</p>
+      </div>
+      <div class="settings-actions">
+        <button id="saveSettingsBtn" class="btn btn-primary">Save</button>
+        <button id="testConnectionBtn" class="btn btn-ghost">Test connection</button>
+      </div>
+      <div id="connectionResult" class="connection-result hidden"></div>
+      <div class="settings-divider"></div>
+      <div class="field-group">
+        <label class="field-label">About</label>
+        <p class="field-hint">Research Intelligence Assistant v0.3<br>Phase 2 — Scholar Inbox integration.<br>Powered by Qwen on your A100.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="sidepanel.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+FROM python:3.11-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1
+
+WORKDIR /app
+
+COPY pyproject.toml ./
+RUN pip install --upgrade pip && pip install .
+
+COPY app ./app
+
+EXPOSE 8000
+
+# Bind to localhost-only by default at the compose layer; the container listens
+# on 0.0.0.0 but compose maps it to 127.0.0.1 (see docker-compose.yml).
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

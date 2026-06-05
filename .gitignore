@@ -1,0 +1,70 @@
+# ── Python ─────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# ── Virtual environments ────────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ── Environment files (NEVER commit secrets) ───────────────────────────────────
+.env
+.env.local
+.env.*.local
+# .env.example is intentionally kept — it documents the shape without values
+
+# ── Database & persistent data ─────────────────────────────────────────────────
+pgdata/
+data/
+*.sqlite
+*.db
+
+# ── PDF storage ─────────────────────────────────────────────────────────────────
+backend/data/
+
+# ── Logs ────────────────────────────────────────────────────────────────────────
+*.log
+backend.log
+vllm.log
+ra-logs/
+
+# ── Model weights & HuggingFace cache ──────────────────────────────────────────
+.cache/
+*.safetensors
+*.bin
+*.gguf
+
+# ── OS ──────────────────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+desktop.ini
+
+# ── IDE ─────────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.cursor/
+
+# ── Testing ─────────────────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ── Node (if you ever add a build step to the extension) ───────────────────────
+node_modules/
+npm-debug.log*
+
+# ── Misc ────────────────────────────────────────────────────────────────────────
+*.tar.gz
+*.zip
+tmp/
