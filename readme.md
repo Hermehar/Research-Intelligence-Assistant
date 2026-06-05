@@ -29,19 +29,18 @@ The extension is the only component that touches Scholar Inbox. The backend neve
 
 ## Features
 
-| | Feature | Phase |
-|---|---|---|
-| ✅ | Fetch papers from Scholar Inbox across any date range | 2 |
-| ✅ | Automatic multi-day date navigation | 2 |
-| ✅ | PDF download via your authenticated browser session | 2 |
-| ✅ | Section-aware PDF parsing (Abstract → Conclusion) | 1 |
-| ✅ | Nine-field structured summaries with signal-derived confidence score | 1 |
-| ✅ | Parallel multi-paper analysis | 2 |
-| ✅ | Side-by-side paper comparison | 2 |
-| ✅ | Keyword search across stored summaries | 2 |
-| ✅ | Persistent knowledge base with delete controls | 2 |
-| 🔲 | Semantic vector search (pgvector) | 3 |
-| 🔲 | Autonomous monitoring + weekly digest | 3 |
+Feature:
+|---|
+| ✅ | Fetch papers from Scholar Inbox across any date range
+| ✅ | Automatic multi-day date navigation
+| ✅ | PDF download via your authenticated browser session
+| ✅ | Section-aware PDF parsing (Abstract → Conclusion)
+| ✅ | Nine-field structured summaries with signal-derived confidence score
+| ✅ | Parallel multi-paper analysis
+| ✅ | Side-by-side paper comparison
+| ✅ | Keyword search across stored summaries
+| ✅ | Persistent knowledge base with delete controls
+| ✅ | Autonomous monitoring + weekly digest
 
 ---
 
