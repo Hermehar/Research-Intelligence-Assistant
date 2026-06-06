@@ -285,6 +285,8 @@ Double-click to start.
 3. Choose a time range: Today, 3 days, 1 week, 2 weeks, 1 month, or a custom date range
 4. Click **Fetch** — the extension navigates Scholar Inbox's date selector automatically
 
+<p align="center"><img width="1470" height="800" alt="Screenshot 2026-06-06 at 3 14 45 PM" src="https://github.com/user-attachments/assets/c26bc044-e6bb-4ebe-baff-5f9f1f96da43" /></p>
+
 ### Analyze
 
 1. Check the papers you want (or click **All**)
@@ -303,6 +305,9 @@ Each card shows a confidence score derived from three signals — PDF parse qual
 ### Knowledge base search
 
 **KB** tab → type a keyword → **Search** → matching fields are surfaced across all stored summaries.
+
+<p align="center"><img width="979" height="810" alt="Screenshot 2026-06-06 at 3 17 56 PM" src="https://github.com/user-attachments/assets/cb11dbe0-7163-406a-9c7c-882a35794ee5" /></p>
+
 
 ---
 
